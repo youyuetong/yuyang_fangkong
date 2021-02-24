@@ -110,7 +110,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .homeHeader {
   background: deepskyblue;
   display: flex;

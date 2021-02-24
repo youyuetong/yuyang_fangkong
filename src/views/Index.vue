@@ -30,7 +30,7 @@
   }
 </script>
 
-<style>
+<style scoped>
 .el-carousel__item h3 {
   color: #eeaaee;
   font-size: 14px;
