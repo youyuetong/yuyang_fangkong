@@ -2,7 +2,7 @@ let proxyObj = {}
 
 proxyObj['/'] = {
     ws: false,
-    target: 'http://localhost:5556/',
+    target: 'http://192.168.102.116:5556/',
     changeOrigin: true,
     pathRewrite:{
         '^/': '/'
