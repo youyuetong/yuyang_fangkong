@@ -3,25 +3,27 @@ import {post, get} from './api'
 export const login=(data )=>post({url:'/user/login', data})
 
 // 登出
-export const out=(data)=>get('/user/out')
+export const goOut=(data)=>get('/user/out')
 
 // 用户管理(分页)无条件 需要当前页 和 数(current、size)
-export const user_page=(data)=>post({url:'/user/page',data})
+export const user_page=(data)=>get('/user/page',data)
+//用户管理添加按钮请求
+export const  user_add=(data)=>post({url:'/user/add',data})
+//用户管理修改按钮请求
+export const updateUser=(data)=>post({url:'user/updateUser',data})
 
-// 展示user表格的所有数据 角色管理
-export const user_list=(data)=>get('/user/list')
+// 删除用户
+export const userdelete=(data)=>get('/user/delete',data)
+//医用人员管理
+export const nursepage=(data)=>get('/user/nursePage',data)
+//医用人员管理添加按钮请求
+export const nurseadd=(data)=>post({url:'/user/nurseadd',data})
+//医用人员管理编辑按钮
+export const updatenurse=(data)=>post({url:'/user/updateUser',data})
+//医用人员管理删除按钮
+export const nursedel=(data)=>get('/user/delete',data)
 
-// 更改用户权限update_role 就是角色管理的update
-export const update_role=(data)=>post({url:'/user/update_role',data})
 
-// 更改个人信息
-export const update_user=(data)=>post({url:'/user/update_user',data})
-
-// 医护人员管理分页 需要当前页 和 数(current、size)
-export const nurse_page=(data)=>post({url:'/user/nurse_page',data})
-
-// admin列表
-export const admin_list=(data)=>get('/user/admin_list')
 
 
 // 获取公告列表
@@ -29,6 +31,16 @@ export const noticeList=(data )=>get('/notice/list')
 
 // 获取战役动态列表
 export const battleList=(data )=>get('/battle/list')
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -16,12 +16,7 @@
       <el-form-item prop="password">
         <el-input type="password" auto-complete="false" v-model="loginForm.password" placeholder="请输入密码"></el-input>
       </el-form-item>
-      <el-form-item prop="code">
-        <el-input type="text" auto-complete="false" v-model="loginForm.code" placeholder="点击图片更换验证码"
-                  style="width: 250px;margin-right:5px "></el-input>
-        <img :src=captchaUrl @click="updateCapt">
 
-      </el-form-item>
       <!--      <el-checkbox v-model="checked">记住我</el-checkbox>-->
       <el-button type="primary" style="width: 100%" @click="submitLogin">登录</el-button>
     </el-form>
@@ -36,25 +31,20 @@ export default {
   name: 'Login',
   data() {
     return {
-      captchaUrl: '/user/rightcode?time='+ new Date(),
+
       loginForm: {
         username: 'admin',
-        password: 'admin',
-        code: ''
+        password: 'admin'
       },
       loading: false,
       rules: {
         username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
-        password: [{required: true, message: '请输入密码', trigger: 'blur'}],
-        code: [{required: true, message: '请输入验证码', trigger: 'blur'}]
+        password: [{required: true, message: '请输入密码', trigger: 'blur'}]
       }
     }
   },
 
   methods: {
-    updateCapt(){
-        this.captchaUrl = '/user/rightcode?time='+ new Date();
-    },
     submitLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
@@ -71,7 +61,7 @@ export default {
              // const token = res.data.token;
              // console.log(token);
              // sessionStorage.setItem("token",token);
-             window.sessionStorage.setItem('user',JSON.stringify(res.data.result));
+             window.sessionStorage.setItem('user',JSON.stringify(res.data));
              // alert(window.sessionStorage.getItem('user'))
              this.$router.replace('/home/index');
              this.$notify({
@@ -87,7 +77,6 @@ export default {
              })
            }
          })
-
         } else {
           console.log('error submit!!');
           this.$message.error('请输入所有字段！！');

@@ -1,8 +1,12 @@
 <template>
    <div class="noticeType">
      <i class="el-icon-s-order" >通知公告</i>
-
-
+       <hr/>
+       <ul v-for="(item,id) in notice" :key="id">
+           <li >
+               {{item.title}}
+           </li>
+       </ul>
 
    </div>
 </template>
@@ -25,9 +29,10 @@ export default {
   },
   methods:{
     getNotice:function (){
-      noticeList().then(res=>{
-        this.notice = JSON.stringify(res.data);
-        alert(this.notice);
+        this.notice=JSON.stringify(this.notice);
+        noticeList().then(res=>{
+          console.log(res.data)
+          this.notice = res.data;
       })
     }
   }
@@ -37,7 +42,12 @@ export default {
 </script>
 
 <style scoped>
-.noticeType {
-
-}
+    .noticeType {
+        width: 48%;
+        float: left;
+    }
+    .el-icon-s-order{
+        font-weight: bolder;
+        font-size: 19px;
+    }
 </style>

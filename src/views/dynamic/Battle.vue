@@ -1,7 +1,12 @@
 <template>
-  <div class="noticeType">
-    <i class="el-icon-s-order" >战役动态</i>
-
+  <div class="noticeType1">
+    <i class="el-icon-s-promotion" >战役动态</i>
+    <hr/>
+    <ul v-for="(item,id) in battle" :key="id">
+      <li >
+        {{item.title}}
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -12,17 +17,18 @@ export default {
 name: "Battle",
   data(){
     return{
-      notice: []
+      battle: []
     }
   },
   mounted:function () {
-    this.getNotice();
+    this.getBattle();
   },
   methods:{
-    getNotice:function (){
+    getBattle:function (){
+       var battle=JSON.stringify(this.battle)
       battleList().then(res=>{
-        this.notice = JSON.stringify(res.data);
-        alert(this.notice);
+        console.log(res.data)
+        this.battle = res.data;
       })
     }
   }
@@ -30,5 +36,13 @@ name: "Battle",
 </script>
 
 <style scoped>
-
+  .noticeType1{
+  width: 48%;
+    float: right;
+  }
+  .el-icon-s-promotion
+  {
+    font-weight: bolder;
+    font-size: 19px;
+  }
 </style>

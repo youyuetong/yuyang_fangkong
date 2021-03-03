@@ -1,12 +1,12 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Login from '@/views/Login'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Login from '@/views/Login';
 import Home from "@/views/Home";
-import Test2 from "@/views/Test2";
-import Test1 from "@/views/Test1";
-import Userinfo from '@/views/userinfo/Userinfo'
-import Index from '@/views/Index'
-
+import Userinfo from '@/views/userinfo/Userinfo';
+import Index from '@/views/Index';
+import UserMsg from "@/views/user/UserMsg";
+import NurseMsg from "@/views/user/NurseMsg";
+import AdminMsg from "@/views/user/AdminMsg"
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,14 +21,19 @@ const routes = [
     component: Home,
     children:[
       {
-        path: '/test1',
-        name: '选项1',
-        component: Test1
+        path: '/usermsg',
+        name: '用户管理',
+        component: UserMsg
       },
       {
-        path: '/test2',
-        name: '选项2',
-        component: Test2
+        path: '/nursemsg',
+        name: '医护人员管理',
+        component: NurseMsg
+      },
+      {
+        path: '/adminmsg',
+        name: '管理员管理',
+        component: AdminMsg
       },
       {
         path: '/userinfo/list',
@@ -45,7 +50,7 @@ const routes = [
 ]
 
 const router = new VueRouter({
-  routes
+    routes
 })
 
 export default router
