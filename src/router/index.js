@@ -8,6 +8,7 @@ import UserMsg from "@/views/user/UserMsg";
 import NurseMsg from "@/views/user/NurseMsg";
 import AdminMsg from "@/views/user/AdminMsg"
 import BattleMsg from "@/views/business/BattleMsg";
+import RefuteMsg from "@/views/business/RefuteMsg";
 Vue.use(VueRouter)
 
 const routes = [
@@ -50,6 +51,11 @@ const routes = [
         path: '/battlemsg',
         name: '战役动态',
         component: BattleMsg,
+      },
+      {
+        path: '/refutemsg',
+        name: '辟谣专题',
+        component: RefuteMsg,
       }
 
     ]

@@ -14,7 +14,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="类别" prop="role" style="padding-left: 25px">
+      <el-form-item label="权限" prop="role" style="padding-left: 25px">
         <el-input
             :disabled="true"
             v-model="user.role"
@@ -22,6 +22,31 @@
             style="width: 240px"
         />
       </el-form-item>
+
+      <el-form-item label="职位" style="padding-left: 25px">
+        <el-input
+            v-if="user.role=='A'"
+            :disabled="true"
+            value="超级管理员"
+            clearable
+            style="width: 240px"
+        />
+        <el-input
+            v-if="user.role=='B'"
+            :disabled="true"
+            value="护士"
+            clearable
+            style="width: 240px"
+        />
+        <el-input
+            v-if="user.role=='C'"
+            :disabled="true"
+            value="普通用户"
+            clearable
+            style="width: 240px"
+        />
+      </el-form-item>
+<!--      v-model="user.role"-->
 
       <el-form-item label="电话" prop="phone" style="padding-left: 15px">
         <el-input
