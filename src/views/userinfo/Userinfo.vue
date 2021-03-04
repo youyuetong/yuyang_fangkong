@@ -63,6 +63,7 @@
 
 <script>
 import moment from "moment";
+import {updateUser} from "@/utils/request";
 
 export default {
   name: "Userinfo",
@@ -81,14 +82,25 @@ export default {
       this.$refs.user.validate((valid)=>{
         if(valid){
           // 调用后端接口！！！
+          updateUser(JSON.stringify(this.user)).then(res=>{
+            if(res.code == 1){
+              this.$message({
+                type: 'success',
+                message: '修改成功!'
+              });
+              window.sessionStorage.setItem("user",JSON.stringify(this.user));
+            }else{
+              console.log('error submit!!');
+              this.$message.error('修改失败！！');
+              return false;
+            }
+          })
         }else{
           console.log('error submit!!');
           this.$message.error('请输入所有字段！！');
           return false;
         }
       })
-      alert(JSON.stringify(this.user));
-
     }
   }
 }

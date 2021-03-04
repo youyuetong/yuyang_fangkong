@@ -5,8 +5,7 @@
       <el-header class="homeHeader">
         <div class="title">疫情防控平台</div>
         <el-dropdown class="userInfo" @command="handleCommand">
-<!--          {{user.username}}-->
-        <span class="el-dropdown-link"><i>ssss<img src="../assets/touxiang.jpg"></i>
+        <span class="el-dropdown-link"><i>{{user.username}}<img src="../assets/touxiang.jpg"></i>
         </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="userinfo">个人中心</el-dropdown-item>
