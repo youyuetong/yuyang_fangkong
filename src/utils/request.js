@@ -41,6 +41,13 @@ export const addadmin=(data)=>post({utl:'/user/addadmin',data})
 
 // 战役动态分页
 export const battlepage=(data)=>get('/battle/page',data)
+//战役动态添加
+export const battleadd=(data)=>post({utl:'/battle/add',data})
+//战役动态编辑
+export const battleupdate=(data)=>post({utl:'/battle/update',data})
+//战役动态删除
+export const battledel=(data)=>get('/battle/delete',data)
+//战役动态内容查询
 
 
 

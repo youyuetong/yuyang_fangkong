@@ -94,7 +94,7 @@
                 </el-form>
                 <div slot="footer" class="dialog-footer">
                     <el-button @click="dialogUserVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addform">确 定</el-button>
+                    <el-button type="primary" @click="addform()">确 定</el-button>
                 </div>
             </el-dialog>
         </el-card>
@@ -121,7 +121,10 @@
                     username:'',
                     home:'',
                     nation:'',
-                    email:''
+                    email:'',
+                    age:'',
+                    email:'',
+                    phone:''
                 },
                 dialogUserVisible:false,
                 pageSize:10,
@@ -214,6 +217,7 @@
             },
             //添加信息
             addinfo() {
+                this.adduserform={}
                 this.dialogStatus="addUser"
                 this.dialogUserVisible=true;
                 // console.log( this.dialogStatus);

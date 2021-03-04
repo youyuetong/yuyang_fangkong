@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="input">
-      <el-input placeholder="请输入动态标题" v-model="title" @keyup.enter.native="searchEnterFun" clearable>
+      <el-input placeholder="请输入动态标题" v-model="title" class="input1" @keyup.enter.native="searchEnterFun" clearable>
       </el-input>
 
-      <el-input placeholder="请输入作者" v-model="auth" @keyup.enter.native="searchEnterFun" clearable>
+      <el-input placeholder="请输入作者" v-model="auth" @keyup.enter.native="searchEnterFun" class="input2" clearable>
         <el-button slot="append" icon="el-icon-search" @click="search" ></el-button>
       </el-input>
-      <el-button type="primary" size="medium" @click="addNurseInfo" class="btns">
+      <el-button type="primary" size="medium" @click="addWarInfo" class="btns">
         添加信息
       </el-button>
     </div>
     <el-card class="cardnurse">
       <el-table
-          :data="nursemasglist"
+          :data="warActivelist"
           stripe
           style="height: 100%; width: 100%">
         <el-table-column
@@ -42,9 +42,9 @@
             prop=""
             label="操作">
           <template slot-scope="scope" style="text-align: center">
-            <el-button  @click="showbattle(scope.row)" type="text" size="small" icon="el-icon-s-order">内容</el-button>
-            <el-button @click="editnurse(scope.row)" type="text" size="small" icon="el-icon-edit">编辑</el-button>
-            <el-button  @click="delnurse(scope.row,scope.id)" type="text" size="small" icon="el-icon-delete">删除</el-button>
+            <el-button @click="showBattle(scope.row)" type="text" size="small" icon="el-icon-s-order">内容</el-button>
+            <el-button @click="editwarActive(scope.row)" type="text" size="small" icon="el-icon-edit">编辑</el-button>
+            <el-button  @click="delwarActive(scope.row,scope.id)" type="text" size="small" icon="el-icon-delete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -58,31 +58,24 @@
           :total="total">
       </el-pagination>
       <!-- 添加/编辑 弹框-->
-      <el-dialog :title="titlenurseMap[nursetitle]" :visible.sync="dialognurseVisible" width="650px">
-        <el-form :model="nurseform" :rules="nurserformrules" :ref="nurseform">
-          <el-form-item label="用户名" :label-width="formLabelWidth">
-            <el-input v-model="nurseform.username" autocomplete="off"></el-input>
+      <el-dialog :title="titlenurseMap[wartitle]" :visible.sync="dialogwarVisible" width="650px">
+        <el-form :model="warform" >
+<!--          <el-form-item label="ID" :label-idwidth="formLabelWidth" v-if="visible">-->
+<!--            <el-input v-model="warform.id"  autocomplete="off"></el-input>-->
+<!--          </el-form-item>-->
+          <el-form-item label="标题"  :label-width="formLabelWidth">
+            <el-input  placeholder="请输入战役标题" v-model="warform.titleactive" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="年龄"  :label-width="formLabelWidth">
-            <el-input type="number" placeholder="请输入年龄" v-model="nurseform.age" autocomplete="off"></el-input>
+          <el-form-item label="作者" :label-width="formLabelWidth">
+            <el-input v-model="warform.auth" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="籍贯" :label-width="formLabelWidth">
-            <el-input v-model="nurseform.home" autocomplete="off"></el-input>
+          <el-form-item label="内容" :label-width="formLabelWidth">
+            <el-input type="textarea" :rows="6" v-model="warform.content" autocomplete="off" ></el-input>
           </el-form-item>
-          <el-form-item label="电话" :label-width="formLabelWidth">
-            <el-input v-model="nurseform.phone" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="邮箱" :label-width="formLabelWidth">
-            <el-input v-model="nurseform.email" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="种族" :label-width="formLabelWidth">
-            <el-input  placeholder="请输入种族" v-model="nurseform.nation" autocomplete="off"></el-input>
-          </el-form-item>
-
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialognurseVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addNurse()">确 定</el-button>
+          <el-button @click="dialogwarVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addWar()">确 定</el-button>
         </div>
       </el-dialog>
     </el-card>
@@ -90,29 +83,28 @@
 </template>
 
 <script>
-import {nurseadd, nursedel, updatenurse} from "../../utils/request";
+    // import {battleadd, battledel, battleupdate} from "../../utils/request";
 import moment from 'moment'
 import {battlepage} from "@/utils/request";
+    import {battleadd, battledel, battleupdate} from "../../utils/request";
 export default {
   name: "BattleMsg",
   data(){
     return{
+      visible:false,
       titlenurseMap:{
-        addNurse:'添加医护人员信息',
-        editNurse:'编辑医护人员信息'
+        addWar:'添加战役动态信息',
+        editWar:'编辑战役动态信息'
       },
       formLabelWidth:'80px',
-      nursetitle:'',
-      nursemasglist:[],
-      nurseform:{
-        username:'',
-        home:'',
-        age:'',
-        phone:'',
-        nation:'',
-        email:''
+      wartitle:'',
+      warActivelist:[],
+      warform:{
+        titleactive:'',
+        author:'',
+        content:''
       },
-      dialognurseVisible:false,
+      dialogwarVisible:false,
       pageSize:10,
       current:1,
       size:6,
@@ -120,40 +112,18 @@ export default {
       total:5,
       title:'',
       auth:'',
-      nurserformrules:{
-        username:[
-          {required: true, message: '医用人员姓名不能为空'}
-        ],
-        age:[
-          { required: true, message: '年龄不能为空'},
-          { type: 'number', message: '年龄必须为数字值'}
-        ],
-        email:[
-          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
-          { type: 'email', message: '请输入正确的邮箱地址', trigger: ['blur', 'change'] }
-        ],
-        phone: [
-          {
-            required: true,
-            message: "请输入手机号码",
-            trigger: "blur",
-          },
-          {
-            validator: function(rule, value, callback) {
-              if (/^1[34578]\d{9}$/.test(value) == false) {
-                callback(new Error("手机号格式错误"));
-              } else {
-                callback();
-              }
-            },
-            trigger: "blur"
-          }
-        ]
-      }
+      // warformrules:{
+      //   title:[
+      //     { required: true, message: '战役标题不能为空',trigger:'blur'},
+      //   ],
+      //   author:[
+      //     { required: true, message: '请输入作者名称', trigger: 'blur' },
+      //   ]
+      // }
     }
   },
   mounted() {
-    this.getnurseinfo()
+    this.getwarinfo()
   },
   methods:{
     //日期格式
@@ -170,9 +140,9 @@ export default {
     },
     search(){
       // 点击搜索按钮重新获取内容
-      this.getnurseinfo()
+      this.getwarinfo()
     },
-    getnurseinfo(){
+    getwarinfo(){
       const param={};
       param.size=this.size;
       param.current=this.current
@@ -182,50 +152,43 @@ export default {
       battlepage(param).then(res => {
         if (res.code == 1){
           // console.log(res)
-          this.nursemasglist=res.data.records;
+          this.warActivelist=res.data.records;
           this.total=res.data.total;
         }else{
-          this.nursemasglist=''
+          this.warActivelist=''
           this.total=1;
         }
       })
     },
     //确定添加/编辑
-    addNurse(){
-      if (this.nursetitle == "addNurse"){
-        var addNurseForm = JSON.stringify(this.nurseform);
+    addWar(){
+      if (this.wartitle == "addWar"){
+        var addWarForm = JSON.stringify(this.warform);
         //    发送请求
-        this.$refs[addNurseForm].validate((valid) => {
-          if (valid) {
-            nurseadd(addNurseForm).then(res => {
+            battleadd(addWarForm).then(res => {
               if (res.code == 1) {
                 //提示信息
                 this.$message.success("添加成功")
                 //关闭列表
-                this.dialognurseVisible = false;
+                this.dialogwarVisible = false;
                 //刷新列表
-                this.getnurseinfo();
+                this.getwarinfo();
                 //情况列表
-                this.nurseform = {};
+                this.warform = {};
               } else {
                 this.$message(res.message)
               }
             })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        })
       }
       else {
         //  修改对话框操作
-        var editNurseForm = JSON.stringify(this.nurseform);
-        updatenurse(editNurseForm).then(res => {
+        var editWarForm = JSON.stringify(this.warform);
+        battleupdate(editWarForm).then(res => {
           if (res.code == 1){
-            this.dialognurseVisible=false;
-            this.getnurseinfo();
+            this.dialogwarVisible=false;
+            this.getwarinfo();
             this.$message.success("修改成功");
-            this.nurseform={}
+            this.warform={}
           }
           else {
             this.$message(res.message);
@@ -233,27 +196,27 @@ export default {
         })
       }
     },
-    //添加医用人员信息
-    addNurseInfo(){
-      this.nursetitle="addNurse"
-      // this.nursemasglist={}
-      this.dialognurseVisible=true
+    //添加战役动态信息
+    addWarInfo(){
+      this.wartitle="addWar"
+      this.warform={}
+      this.dialogwarVisible=true
     },
-    //编辑医用人员信息
-    editnurse(row){
-      this.nursetitle="editNurse"
-      this.dialognurseVisible=true;
-      this.nurseform=row;
+    //编辑战役动态信息
+    editwarActive(row){
+      this.wartitle="editWar"
+      this.dialogwarVisible=true;
+      this.warform=row;
     },
     //删除医用人员信息
-    delnurse(id){
+    delwarActive(id){
       this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
         //发起删除请求
-        nursedel(id).then(res => {
+        battledel(id).then(res => {
           if(res.code == 1){
             this.$message({
               type: 'success',
@@ -262,7 +225,7 @@ export default {
             //回到第一页
             this.current=1
             //刷新列表信息
-            this.getnurseinfo()
+            this.getwarinfo()
           }else {
             this.$message({
               type: 'error',
@@ -278,9 +241,13 @@ export default {
         });
       });
     },
+    //查看内容
+    showBattle(row){
+
+},
     handleCurrentChange(val){
       this.current=val;
-      this.getnurseinfo()
+      this.getwarinfo()
     }
   }
 }
@@ -290,7 +257,21 @@ export default {
 .input{
   display: flex;
   margin-top: 23px;
-  width: 40%;
+  width: 50%;
+  margin-right: 10px;
+}
+.el-textarea{
+  height: 100px;
+
+}
+.textarea_input{
+  height: 100%;
+}
+.input1{
+  margin-right: 13px;
+}
+.input2{
+  width: 100%;
 }
 .btns{
   margin-left:15px;

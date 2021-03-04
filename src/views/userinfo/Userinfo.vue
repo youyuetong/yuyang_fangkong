@@ -87,7 +87,6 @@
 </template>
 
 <script>
-import moment from "moment";
 import {updateUser} from "@/utils/request";
 
 export default {
