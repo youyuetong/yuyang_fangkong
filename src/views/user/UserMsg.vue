@@ -9,9 +9,12 @@
                     stripe
                     style="width: 100%">
                 <el-table-column
-                        prop="id"
+                        prop=""
                         label="ID"
                         >
+                  <template slot-scope="scope">
+                    <span>{{scope.$index+1}}</span>
+                  </template>
                 </el-table-column>
                 <el-table-column
                         prop="username"
