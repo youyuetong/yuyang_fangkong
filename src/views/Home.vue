@@ -28,7 +28,7 @@
             <!--              <el-menu-item :index="children.path" v-for="(children,index) in item.children">{{children.name}}</el-menu-item>-->
             <!--            </el-submenu>-->
 
-            <el-menu-item index="/home/index">
+            <el-menu-item index="/home/index" style="width: 200px">
               <i class="el-icon-menu"></i>
               <span slot="title">首页</span>
             </el-menu-item>
