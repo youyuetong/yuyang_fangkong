@@ -164,10 +164,8 @@ export default {
     },
     methods:{
         //日期格式
-        formatTime(row,colum){
-            var date = row[column.property];
-            if(date == undefined){return ''};
-            return moment(date).format("YYYY-MM-DD HH:mm:ss")
+        formatTime(row){
+            return moment(row.createTime).format("YYYY-MM-DD HH:mm:ss")
         },
         //搜索信息
         //点击回车即可搜索
@@ -302,5 +300,9 @@ export default {
     }
     .cardnurse{
         margin-top: 20px;
+    }
+    .pakage{
+      margin-top: 10px;
+      float: right;
     }
 </style>

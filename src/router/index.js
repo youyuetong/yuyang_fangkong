@@ -7,6 +7,7 @@ import Index from '@/views/Index';
 import UserMsg from "@/views/user/UserMsg";
 import NurseMsg from "@/views/user/NurseMsg";
 import AdminMsg from "@/views/user/AdminMsg"
+import BattleMsg from "@/views/business/BattleMsg";
 Vue.use(VueRouter)
 
 const routes = [
@@ -44,7 +45,13 @@ const routes = [
         path: '/home/index',
         name: 'Index',
         component: Index,
+      },
+      {
+        path: '/battlemsg',
+        name: '战役动态',
+        component: BattleMsg,
       }
+
     ]
   },
 ]

@@ -1,9 +1,9 @@
 <template>
     <div>
         <div class="input">
-            <el-input placeholder="请输入医护姓名关键字" v-model="selectquery" @keyup.enter.native="searchEnterFun" clearable>
-                <el-button slot="append" icon="el-icon-search" @click="search" ></el-button>
-            </el-input>
+<!--            <el-input placeholder="请输入医护姓名关键字" v-model="selectquery" @keyup.enter.native="searchEnterFun" clearable>-->
+<!--                <el-button slot="append" icon="el-icon-search" @click="search" ></el-button>-->
+<!--            </el-input>-->
             <el-button type="primary" size="medium" @click="addNurseInfo" class="btns">
                 添加信息
             </el-button>
@@ -99,15 +99,16 @@
 </template>
 
 <script>
-    import {nurseadd, nursedel, nursepage, updatenurse} from "../../utils/request";
+    import {nursedel, updatenurse} from "../../utils/request";
+    import {adminpage, addadmin} from "@/utils/request";
 
     export default {
         name: "AdminMsg",
         data(){
             return{
                 titlenurseMap:{
-                    addNurse:'添加医护人员信息',
-                    editNurse:'编辑医护人员信息'
+                    addNurse:'添加管理人员信息',
+                    editNurse:'编辑管理人员信息'
                 },
                 formLabelWidth:'80px',
                 nursetitle:'',
@@ -160,11 +161,11 @@
                 param.current=this.current
                 //把搜索的关键字传递给后台关键字
                 param.username=this.selectquery
-                nursepage(param).then(res => {
+                adminpage(param).then(res => {
                     if (res.code == 1){
                         // console.log(res)
-                        this.nursemasglist=res.data.result.records;
-                        this.total=res.data.result.total;
+                        this.nursemasglist=res.data.records;
+                        this.total=res.data.total;
                     }
                 })
             },
@@ -173,7 +174,7 @@
                 if (this.nursetitle == "addNurse"){
                     var addNurseForm = JSON.stringify(this.nurseform);
                     //    发送请求
-                    nurseadd(addNurseForm).then(res => {
+                  addadmin(addNurseForm).then(res => {
                         if (res.code == 1){
                             //提示信息
                             this.$message.success("添加成功")
@@ -269,5 +270,9 @@
     }
     .cardnurse{
         margin-top: 20px;
+    }
+    .pakage{
+      margin-top: 10px;
+      float: right;
     }
 </style>

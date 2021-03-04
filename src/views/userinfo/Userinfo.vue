@@ -14,7 +14,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="类别" prop="role">
+      <el-form-item label="类别" prop="role" style="padding-left: 25px">
         <el-input
             :disabled="true"
             v-model="user.role"
@@ -23,7 +23,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="电话" prop="phone">
+      <el-form-item label="电话" prop="phone" style="padding-left: 15px">
         <el-input
             v-model="user.phone"
             clearable
@@ -31,7 +31,7 @@
         />
       </el-form-item>
 
-      <el-form-item label="邮箱" prop="email">
+      <el-form-item label="邮箱" prop="email" style="padding-left: 15px">
         <el-input
             v-model="user.email"
             clearable
@@ -44,7 +44,6 @@
             :disabled="true"
             v-model="user.createTime"
             clearable
-
             style="width: 240px"
         />
       </el-form-item>
@@ -63,6 +62,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "Userinfo",
   data() {

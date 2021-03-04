@@ -1,7 +1,7 @@
 import axios from 'axios'
 //创建一个实例
 const instance = axios.create({
-    baseURL:'http://115.29.160.250/',
+    baseURL:'http://localhost:5556/',
     timeout: 1000,
     // headers: {'X-Custom-Header': 'foobar'}
     headers: {'Content-Type':'application/json','responseType': 'blob'}

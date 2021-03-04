@@ -1,6 +1,13 @@
 import {post, get} from './api'
+import da from "element-ui/src/locale/lang/da";
 // 登录
 export const login=(data )=>post({url:'/user/login', data})
+
+// 获取公告列表
+export const noticeList=(data )=>get('/notice/list')
+
+// 获取战役动态列表
+export const battleList=(data )=>get('/battle/list')
 
 // 登出
 export const goOut=(data)=>get('/user/out')
@@ -23,16 +30,17 @@ export const updatenurse=(data)=>post({url:'/user/updateUser',data})
 //医用人员管理删除按钮
 export const nursedel=(data)=>get('/user/delete',data)
 
+//管理人员管理分页
+export const adminpage=(data)=>get('/user/admin',data)
+// 添加管理员
+export const addadmin=(data)=>post({utl:'/user/addadmin',data})
+
+// 编辑管理人员用updateUser这个接口一摸一样。 删除也是用/user/delete
 
 
 
-// 获取公告列表
-export const noticeList=(data )=>get('/notice/list')
-
-// 获取战役动态列表
-export const battleList=(data )=>get('/battle/list')
-
-
+// 战役动态分页
+export const battlepage=(data)=>get('/battle/page',data)
 
 
 

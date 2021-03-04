@@ -41,7 +41,7 @@
                 <el-table-column
                         prop="createTime"
                         label="注册日期"
-                        :formatter="formatTime"
+                        :formatter="timeFormatter"
                         width="300">
                 </el-table-column>
                 <el-table-column
@@ -164,10 +164,8 @@
         },
         methods: {
             //日期格式
-            formatTime(row,colum){
-                var date = row[column.property];
-                if(date == undefined){return ''};
-                return moment(date).format("YYYY-MM-DD HH:mm:ss")
+          timeFormatter(row){
+              return moment(row.createTime).format('YYYY-MM-DD HH:mm:ss');
             },
             //关闭对话框调用不同的接口
             addform(){

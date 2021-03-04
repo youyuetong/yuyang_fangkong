@@ -43,7 +43,7 @@
 
             <el-submenu index="3">
               <template slot="title"><i class="el-icon-message"></i>业务管理</template>
-              <el-menu-item index="/usermsg">战役动态</el-menu-item>
+              <el-menu-item index="/battlemsg">战役动态</el-menu-item>
               <el-menu-item index="/test2">抗议先锋</el-menu-item>
               <el-menu-item index="/test2">辟谣专题</el-menu-item>
               <!--              <el-menu-item index="/test2">你问医答</el-menu-item>-->
