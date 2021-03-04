@@ -64,7 +64,7 @@
 <!--            <el-input v-model="warform.id"  autocomplete="off"></el-input>-->
 <!--          </el-form-item>-->
           <el-form-item label="标题"  :label-width="formLabelWidth">
-            <el-input  placeholder="请输入战役标题" v-model="warform.titleactive" autocomplete="off"></el-input>
+            <el-input  placeholder="请输入战役标题" v-model="warform.title" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="作者" :label-width="formLabelWidth">
             <el-input v-model="warform.auth" autocomplete="off"></el-input>
@@ -73,9 +73,10 @@
             <el-input type="textarea" :rows="6" v-model="warform.content" autocomplete="off" ></el-input>
           </el-form-item>
         </el-form>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogwarVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addWar()">确 定</el-button>
+          <el-button type="primary" @click="addBattle()">确 定</el-button>
         </div>
       </el-dialog>
     </el-card>
@@ -83,10 +84,9 @@
 </template>
 
 <script>
-    // import {battleadd, battledel, battleupdate} from "../../utils/request";
 import moment from 'moment'
-import {battlepage} from "@/utils/request";
-    import {battleadd, battledel, battleupdate} from "../../utils/request";
+import {battlepage,battleadd, battledel, battleupdate} from "@/utils/request";
+
 export default {
   name: "BattleMsg",
   data(){
@@ -100,8 +100,8 @@ export default {
       wartitle:'',
       warActivelist:[],
       warform:{
-        titleactive:'',
-        author:'',
+        title:'',
+        auth:'',
         content:''
       },
       dialogwarVisible:false,
@@ -161,7 +161,7 @@ export default {
       })
     },
     //确定添加/编辑
-    addWar(){
+    addBattle(){
       if (this.wartitle == "addWar"){
         var addWarForm = JSON.stringify(this.warform);
         //    发送请求
@@ -244,7 +244,9 @@ export default {
     //查看内容
     showBattle(row){
 
-},
+
+
+    },
     handleCurrentChange(val){
       this.current=val;
       this.getwarinfo()

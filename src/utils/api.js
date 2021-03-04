@@ -1,10 +1,10 @@
 import axios from 'axios'
 //创建一个实例
 const instance = axios.create({
-    baseURL:'http://192.168.102.116:5556/',
-    timeout: 1000,
+    baseURL:'http://115.29.160.250:5556/',
+    timeout: 1500,
     // headers: {'X-Custom-Header': 'foobar'}
-    headers: {'Content-Type':'application/json','responseType': 'blob'}
+    headers: {'Content-Type':'application/json'}
 });
 //添加请求拦截器
 // instance.interceptors.request.use(function (config){

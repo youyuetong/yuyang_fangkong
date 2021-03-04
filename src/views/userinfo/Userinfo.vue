@@ -46,7 +46,6 @@
             style="width: 240px"
         />
       </el-form-item>
-<!--      v-model="user.role"-->
 
       <el-form-item label="电话" prop="phone" style="padding-left: 15px">
         <el-input
@@ -72,6 +71,7 @@
             style="width: 240px"
         />
       </el-form-item>
+
       <el-form-item>
         <el-button
             type="success"
@@ -81,6 +81,8 @@
             @click="userUpdate">修改
         </el-button>
       </el-form-item>
+
+
     </el-form>
   </div>
 

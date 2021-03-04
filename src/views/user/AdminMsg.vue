@@ -101,6 +101,7 @@
 <script>
     import {nursedel, updatenurse} from "../../utils/request";
     import {adminpage, addadmin} from "@/utils/request";
+    import moment from "moment";
 
     export default {
         name: "AdminMsg",
@@ -135,13 +136,8 @@
         },
         methods:{
             //日期格式更改
-            formatTime(row, column){
-                const date = new Date(row[column.property])
-                return date.getFullYear() + '年' +
-                    date.getMonth() + '月' +
-                    date.getDate() + '日 ' +
-                    date.getHours()
-                    + ':' +date.getMinutes()
+            formatTime(row){
+              return moment(row.createTime).format("YYYY-MM-DD HH:mm:ss")
             },
             //搜索信息
             //点击回车即可搜索
