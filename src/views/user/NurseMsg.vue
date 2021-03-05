@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="input">
-            <el-input placeholder="请输入医护姓名关键字" v-model="selectquery" @keyup.enter.native="searchEnterFun" clearable>
+            <el-input style="width: 250px;" placeholder="请输入医护姓名关键字" v-model="selectquery" @keyup.enter.native="searchEnterFun" clearable>
                 <el-button slot="append" icon="el-icon-search" @click="search" ></el-button>
             </el-input>
             <el-button type="primary" size="medium" @click="addNurseInfo" class="btns">

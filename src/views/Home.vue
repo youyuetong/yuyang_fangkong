@@ -29,19 +29,19 @@
             <!--            </el-submenu>-->
 
             <el-menu-item index="/home/index" style="width: 200px">
-              <i class="el-icon-menu"></i>
+              <i class="el-icon-umbrella"></i>
               <span slot="title">首页</span>
             </el-menu-item>
 
             <el-submenu index="2">
-              <template slot="title"><i class="el-icon-message"></i>基础管理</template>
+              <template slot="title"><i class="el-icon-menu"></i>基础管理</template>
               <el-menu-item index="/usermsg">用户管理</el-menu-item>
               <el-menu-item index="/nursemsg">医护人员</el-menu-item>
               <el-menu-item index="/adminmsg">管理员管理</el-menu-item>
             </el-submenu>
 
             <el-submenu index="3">
-              <template slot="title"><i class="el-icon-message"></i>业务管理</template>
+              <template slot="title"><i class="el-icon-s-cooperation"></i>业务管理</template>
               <el-menu-item index="/battlemsg">战役动态</el-menu-item>
               <el-menu-item index="/test2">抗疫先锋</el-menu-item>
               <el-menu-item index="/refutemsg">辟谣专题</el-menu-item>
@@ -49,7 +49,7 @@
             </el-submenu>
 
             <el-submenu index="4">
-              <template slot="title"><i class="el-icon-message"></i>系统管理</template>
+              <template slot="title"><i class="el-icon-setting"></i>系统管理</template>
               <el-menu-item index="/usermsg">菜单管理</el-menu-item>
               <el-menu-item index="/test2">角色管理</el-menu-item>
               <el-menu-item index="/test2">公告管理</el-menu-item>
