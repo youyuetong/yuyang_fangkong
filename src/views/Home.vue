@@ -43,16 +43,15 @@
             <el-submenu index="3">
               <template slot="title"><i class="el-icon-s-cooperation"></i>业务管理</template>
               <el-menu-item index="/battlemsg">战役动态</el-menu-item>
-              <el-menu-item index="/test2">抗疫先锋</el-menu-item>
+              <el-menu-item index="/antipioneer">抗疫先锋</el-menu-item>
               <el-menu-item index="/refutemsg">辟谣专题</el-menu-item>
-              <!--              <el-menu-item index="/test2">你问医答</el-menu-item>-->
             </el-submenu>
 
             <el-submenu index="4">
               <template slot="title"><i class="el-icon-setting"></i>系统管理</template>
-              <el-menu-item index="/usermsg">菜单管理</el-menu-item>
-              <el-menu-item index="/test2">角色管理</el-menu-item>
-              <el-menu-item index="/test2">公告管理</el-menu-item>
+              <el-menu-item index="/menuMsg">菜单管理</el-menu-item>
+              <el-menu-item index="/roleMsg">角色管理</el-menu-item>
+              <el-menu-item index="/conformMsg">公告管理</el-menu-item>
             </el-submenu>
 
           </el-menu>

@@ -10,9 +10,9 @@ import AdminMsg from "@/views/user/AdminMsg"
 import BattleMsg from "@/views/business/BattleMsg";
 import RefuteMsg from "@/views/business/RefuteMsg";
 import Antipioneer from "@/views/business/Antipioneer";
-import RoleMsg from '@/views/system/roleMsg'
-import MenuMsg from '@/views/system/menuMsg'
-import ConformMsg from '@/views/system/conformmsg'
+import RoleMsg from '@/views/system/RoleMsg'
+import MenuMsg from '@/views/system/MenuMsg'
+import ConformMsg from '@/views/system/ConformMsg'
 Vue.use(VueRouter)
 
 const routes = [
