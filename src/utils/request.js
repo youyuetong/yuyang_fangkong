@@ -49,8 +49,14 @@ export const battleadd=(data)=>post({url:'/battle/add',data});
 export const battleupdate=(data)=>post({url:'/battle/update',data})
 //战役动态删除
 export const battledel=(data)=>get('/battle/delete',data)
-//战役动态内容查询
-
+//避谣专题表格查询
+export const refutepage=(data)=>get('/refute-rumor/page',data)
+//避谣专题添加按钮
+export const refuteadd=(data)=>post({url:'/refute-rumor/add',data})
+//避谣专题编辑按钮
+export const refuteupdate=(data)=>post({url:'/refute-rumor/update',data})
+//避谣专题删除按钮
+export const refutedel=(data)=>get('/refute-rumor/delete',data)
 
 
 

@@ -9,6 +9,10 @@ import NurseMsg from "@/views/user/NurseMsg";
 import AdminMsg from "@/views/user/AdminMsg"
 import BattleMsg from "@/views/business/BattleMsg";
 import RefuteMsg from "@/views/business/RefuteMsg";
+import Antipioneer from "@/views/business/Antipioneer";
+import RoleMsg from '@/views/system/roleMsg'
+import MenuMsg from '@/views/system/menuMsg'
+import ConformMsg from '@/views/system/conformmsg'
 Vue.use(VueRouter)
 
 const routes = [
@@ -53,11 +57,30 @@ const routes = [
         component: BattleMsg,
       },
       {
+        path:'/antipioneer',
+        name:'抗疫先锋',
+        component:Antipioneer
+      },
+      {
         path: '/refutemsg',
         name: '辟谣专题',
         component: RefuteMsg,
+      },
+      {
+        path: '/roleMsg',
+        name: '角色管理',
+        component: RoleMsg,
+      },
+      {
+        path: '/conformMsg',
+        name: '公告管理',
+        component: ConformMsg,
+      },
+      {
+        path: '/menuMsg',
+        name: '菜单管理',
+        component: MenuMsg,
       }
-
     ]
   },
 ]

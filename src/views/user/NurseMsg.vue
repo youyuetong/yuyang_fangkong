@@ -70,21 +70,21 @@
                     :total="total">
             </el-pagination>
             <!-- 添加/编辑 弹框-->
-            <el-dialog :title="titlenurseMap[nursetitle]" :visible.sync="dialognurseVisible" width="650px">
-                <el-form :model="nurseform" :rules="nurserformrules" :ref="nurseform">
-                    <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-dialog :title="titlenurseMap[nursetitle]" :visible.sync="dialognurseVisible" width="650px" @close="clearfeild">
+                <el-form :model="nurseform" :rules="nurserformrules" ref="nurseform">
+                    <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
                         <el-input v-model="nurseform.username" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="年龄"  :label-width="formLabelWidth">
-                        <el-input type="number" placeholder="请输入年龄" v-model="nurseform.age" autocomplete="off"></el-input>
+                    <el-form-item label="年龄"  :label-width="formLabelWidth" prop="age">
+                        <el-input placeholder="请输入年龄" v-model.number="nurseform.age" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="籍贯" :label-width="formLabelWidth">
                         <el-input v-model="nurseform.home" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="电话" :label-width="formLabelWidth">
+                    <el-form-item label="电话" :label-width="formLabelWidth" prop="phone">
                         <el-input v-model="nurseform.phone" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="邮箱" :label-width="formLabelWidth">
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
                         <el-input v-model="nurseform.email" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="种族" :label-width="formLabelWidth">
@@ -132,11 +132,11 @@ export default {
             selectquery:'',
             nurserformrules:{
                 username:[
-                    {required: true, message: '医用人员姓名不能为空'}
+                    {required: true, message: '医用人员姓名不能为空',trigger:'blur'}
                 ],
                 age:[
-                    { required: true, message: '年龄不能为空'},
-                    { type: 'number', message: '年龄必须为数字值'}
+                    { required: true, message: '年龄不能为空',trigger:'blur'},
+                    // { type: 'number', message: '年龄必须为数字值'}
                 ],
                 email:[
                     { required: true, message: '请输入邮箱地址', trigger: 'blur' },
@@ -201,7 +201,7 @@ export default {
             if (this.nursetitle == "addNurse"){
                 var addNurseForm = JSON.stringify(this.nurseform);
             //    发送请求
-                this.$refs[addNurseForm].validate((valid) => {
+                this.$refs.nurseform.validate((valid) => {
                     if (valid) {
                         nurseadd(addNurseForm).then(res => {
                             if (res.code == 1) {
@@ -211,8 +211,8 @@ export default {
                                 this.dialognurseVisible = false;
                                 //刷新列表
                                 this.getnurseinfo();
-                                //情况列表
-                                this.nurseform = {};
+                                // //清空列表
+                                // this.nurseform = {};
                             } else {
                                 this.$message(res.message)
                             }
@@ -226,30 +226,41 @@ export default {
             else {
                 //  修改对话框操作
                 var editNurseForm = JSON.stringify(this.nurseform);
-               updatenurse(editNurseForm).then(res => {
-                   if (res.code == 1){
-                        this.dialognurseVisible=false;
-                         this.getnurseinfo();
-                         this.$message.success("修改成功");
-                         this.nurseform={}
-                     }
-                     else {
-                       this.$message(res.message);
+                this.$refs.nurseform.validate((valid) => {
+                    if (valid) {
+                        updatenurse(editNurseForm).then(res => {
+                            if (res.code == 1){
+                                this.dialognurseVisible=false;
+                                this.getnurseinfo();
+                                this.$message.success("修改成功");
+                                // this.nurseform={}
+                            }
+                            else {
+                                this.$message(res.message);
+                            }
+                        })
                     }
                 })
+
             }
+        },
+        //去除验证
+        clearfeild(){
+            this.$nextTick(()=>{
+                this.$refs.nurseform.resetFields();//等弹窗里的form表单的dom渲染完在执行this.$refs.nurseform.resetFields()，去除验证
+            });
         },
         //添加医用人员信息
         addNurseInfo(){
             this.nursetitle="addNurse"
-            // this.nursemasglist={}
             this.dialognurseVisible=true
+            this.nurseform={}
         },
         //编辑医用人员信息
         editnurse(row){
+            this.nurseform=row;
             this.nursetitle="editNurse"
             this.dialognurseVisible=true;
-            this.nurseform=row;
         },
         //删除医用人员信息
         delnurse(id){

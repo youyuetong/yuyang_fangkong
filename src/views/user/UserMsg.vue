@@ -66,25 +66,25 @@
                     :total="total">
             </el-pagination>
             <!-- 添加/编辑 弹框-->
-            <el-dialog :title="titleMap[dialogStatus]" :visible.sync="dialogUserVisible" width="650px">
-                <el-form :model="adduserform" :rules="userformrules" :ref="adduserform">
-                    <el-form-item label="用户名" :label-width="formLabelWidth">
+            <el-dialog :title="titleMap[dialogStatus]" :visible.sync="dialogUserVisible" width="650px" @close="clearfeild">
+                <el-form :model="adduserform" :rules="userformrules" ref="adduserform">
+                    <el-form-item label="用户名" :label-width="formLabelWidth" prop="username">
                         <el-input v-model="adduserform.username" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="密码" :label-width="formLabelWidth">
-                        <el-input v-model="adduserform.password" autocomplete="off"></el-input>
-                    </el-form-item>
-                    <el-form-item label="年龄"  :label-width="formLabelWidth">
-                        <el-input placeholder="请输入年龄" v-model="adduserform.age" autocomplete="off">
+<!--                    <el-form-item label="密码" :label-width="formLabelWidth">-->
+<!--                        <el-input v-model="adduserform.password" autocomplete="off"></el-input>-->
+<!--                    </el-form-item>-->
+                    <el-form-item label="年龄"  :label-width="formLabelWidth" prop="age">
+                        <el-input placeholder="请输入年龄" v-model.number="adduserform.age" autocomplete="off">
                         </el-input>
                     </el-form-item>
                     <el-form-item label="籍贯" :label-width="formLabelWidth">
                         <el-input v-model="adduserform.home" autocomplete="off"></el-input>
                     </el-form-item>
-                    <el-form-item label="电话" :label-width="formLabelWidth">
+                    <el-form-item label="电话" :label-width="formLabelWidth" prop="phone">
                         <el-input v-model="adduserform.phone" autocomplete="off" ></el-input>
                     </el-form-item>
-                    <el-form-item label="邮箱" :label-width="formLabelWidth">
+                    <el-form-item label="邮箱" :label-width="formLabelWidth" prop="email">
                         <el-input v-model="adduserform.email" autocomplete="off"></el-input>
                     </el-form-item>
                     <el-form-item label="种族" :label-width="formLabelWidth">
@@ -104,7 +104,7 @@
 <script>
     // scriptimport {updateUser, user_add, user_page, userdelete} from "../utils/request";
 
-    import {updateUser, user_add, user_page, userdelete} from "../../utils/request";
+    import {nurseadd, updatenurse, updateUser, user_add, user_page, userdelete} from "../../utils/request";
     import moment from 'moment'
     export default {
         name: "UserMsg",
@@ -135,11 +135,11 @@
                 total:5,
                 userformrules:{
                     username:[
-                        {required: true, message: '用户名不能为空'}
+                        {required: true, message: '用户名不能为空',trigger: 'blur'}
                     ],
                     age:[
-                        { required: true, message: '年龄不能为空'},
-                        { type: 'number', message: '年龄必须为数字值'}
+                        { required: true, message: '年龄不能为空',trigger: 'blur'},
+                        // { type: 'number', message: '年龄必须为数字值',trigger: 'blur'}
                          ],
                     email:[
                         { required: true, message: '请输入邮箱地址', trigger: 'blur' },
@@ -174,11 +174,11 @@
               return moment(row.createTime).format('YYYY-MM-DD HH:mm:ss');
             },
             //关闭对话框调用不同的接口
+
             addform(){
-                this.dialogUserVisible = false;
                 if (this.dialogStatus == "addUser") {
                     var addUserForm = JSON.stringify(this.adduserform);
-                    this.$refs[addUserForm].validate((valid) => {
+                    this.$refs.adduserform.validate((valid) => {
                         if (valid) {
                             user_add(addUserForm).then(res => {
                                 if (res.code == 1) {
@@ -189,8 +189,8 @@
                                     this.dialogUserVisible = false;
                                     //刷新列表信息
                                     this.getuserinfo()
-                                    //清空 表单信息
-                                    this.adduserform = {};
+                                    // //清空 表单信息
+                                    // this.adduserform = {};
                                 }
                             })
                         } else {
@@ -201,19 +201,30 @@
                     // console.log("向服务器发送添加的请求！");
                 } else {
                     var edituserform = JSON.stringify(this.adduserform);
-                    updateUser(edituserform).then(res => {
-                        // alert(res.code);
-                        if (res.code == 1){
-                            this.dialogUserVisible=false;
-                            this.getuserinfo();
-                            this.$message.success("修改成功")
-                            console.log(res);
-                        }else {
-                            this.$message(res.message)
+                    this.$refs.adduserform.validate((valid) => {
+                        if (valid) {
+                            updateUser(edituserform).then(res => {
+                                // alert(res.code);
+                                if (res.code == 1){
+                                    this.dialogUserVisible=false;
+                                    this.getuserinfo();
+                                    this.$message.success("修改成功")
+                                    // console.log(res);
+                                }else {
+                                    this.$message(res.message)
+                                }
+                            })
                         }
                     })
-                    console.log("向服务器发送修改的请求！");
+
+                    // console.log("向服务器发送修改的请求！");
                 }
+            },
+            //去除验证
+            clearfeild(){
+                this.$nextTick(()=>{
+                    this.$refs.adduserform.resetFields();//等弹窗里的form表单的dom渲染完在执行this.$refs.nurseform.resetFields()，去除验证
+                });
             },
             //添加信息
             addinfo() {

@@ -58,27 +58,40 @@
           :total="total">
       </el-pagination>
       <!-- 添加/编辑 弹框-->
-      <el-dialog :title="titlenurseMap[wartitle]" :visible.sync="dialogwarVisible" width="650px">
-        <el-form :model="warform" >
+      <el-dialog :title="titlenurseMap[wartitle]"  :visible.sync="dialogwarVisible" width="650px" @close="clearfeild">
+        <el-form :model="warform" :rules="rules" ref="warform">
 <!--          <el-form-item label="ID" :label-idwidth="formLabelWidth" v-if="visible">-->
 <!--            <el-input v-model="warform.id"  autocomplete="off"></el-input>-->
 <!--          </el-form-item>-->
-          <el-form-item label="标题"  :label-width="formLabelWidth">
+          <el-form-item label="标题"  :label-width="formLabelWidth" prop="title">
             <el-input  placeholder="请输入战役标题" v-model="warform.title" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="作者" :label-width="formLabelWidth">
+          <el-form-item label="作者" :label-width="formLabelWidth" prop="auth">
             <el-input v-model="warform.auth" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="内容" :label-width="formLabelWidth">
+          <el-form-item label="内容" :label-width="formLabelWidth" prop="content">
             <el-input type="textarea" :rows="6" v-model="warform.content" autocomplete="off" ></el-input>
           </el-form-item>
         </el-form>
-
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogwarVisible = false">取 消</el-button>
           <el-button type="primary" @click="addBattle()">确 定</el-button>
         </div>
       </el-dialog>
+        <el-dialog title="战役动态内容" :visible.sync="dialogWarVisible" width="600px">
+            <el-form :model="warform">
+                <el-form-item  :label-width="formLabelWidth">
+                   <div class="contentp">
+                        <span>
+                        {{warform.content}}
+                    </span>
+                   </div>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogWarVisible = false" type="primary">关闭</el-button>
+            </div>
+        </el-dialog>
     </el-card>
   </div>
 </template>
@@ -86,11 +99,11 @@
 <script>
 import moment from 'moment'
 import {battlepage,battleadd, battledel, battleupdate} from "@/utils/request";
-
 export default {
   name: "BattleMsg",
   data(){
     return{
+      dialogWarVisible:false,
       visible:false,
       titlenurseMap:{
         addWar:'添加战役动态信息',
@@ -112,14 +125,17 @@ export default {
       total:5,
       title:'',
       auth:'',
-      // warformrules:{
-      //   title:[
-      //     { required: true, message: '战役标题不能为空',trigger:'blur'},
-      //   ],
-      //   author:[
-      //     { required: true, message: '请输入作者名称', trigger: 'blur' },
-      //   ]
-      // }
+      rules:{
+        title:[
+          { required: true, message: '战役标题不能为空',trigger:'blur'},
+        ],
+        auth:[
+          { required: true,message: '请输入作者名称', trigger: 'blur' },
+        ],
+        content:[
+              { required: true,message: '请输入战役动态内容', trigger: 'blur' },
+          ]
+      }
     }
   },
   mounted() {
@@ -164,51 +180,66 @@ export default {
     addBattle(){
       if (this.wartitle == "addWar"){
         var addWarForm = JSON.stringify(this.warform);
-        //    发送请求
-            battleadd(addWarForm).then(res => {
-              if (res.code == 1) {
-                //提示信息
-                this.$message.success("添加成功")
-                //关闭列表
-                this.dialogwarVisible = false;
-                //刷新列表
-                this.getwarinfo();
-                //情况列表
-                this.warform = {};
-              } else {
-                this.$message(res.message)
+          this.$refs.warform.validate((valid) => {
+              if (valid) {
+                  //    发送请求
+                  battleadd(addWarForm).then(res => {
+                      if (res.code == 1) {
+                          //提示信息
+                          this.$message.success("添加成功")
+                          //关闭列表
+                          this.dialogwarVisible = false;
+                          //刷新列表
+                          this.getwarinfo();
+                      } else {
+                          this.$message(res.message)
+                      }
+                  })
               }
-            })
+          })
+
+
       }
       else {
         //  修改对话框操作
         var editWarForm = JSON.stringify(this.warform);
-        battleupdate(editWarForm).then(res => {
-          if (res.code == 1){
-            this.dialogwarVisible=false;
-            this.getwarinfo();
-            this.$message.success("修改成功");
-            this.warform={}
-          }
-          else {
-            this.$message(res.message);
-          }
-        })
+          this.$refs.warform.validate((valid) => {
+              if (valid) {
+                  battleupdate(editWarForm).then(res => {
+                      if (res.code == 1){
+                          this.dialogwarVisible=false;
+                          this.getwarinfo();
+                          this.$message.success("修改成功");
+                          console.log(res)
+                      }
+                      else {
+                          this.$message(res.message);
+                      }
+                  })
+              }
+          })
+
       }
     },
+      //去除验证
+      clearfeild(){
+          this.$nextTick(()=>{
+              this.$refs.warform.resetFields();//等弹窗里的form表单的dom渲染完在执行this.$refs.nurseform.resetFields()，去除验证
+          });
+      },
     //添加战役动态信息
     addWarInfo(){
-      this.wartitle="addWar"
       this.warform={}
+      this.wartitle="addWar"
       this.dialogwarVisible=true
     },
     //编辑战役动态信息
     editwarActive(row){
-      this.wartitle="editWar"
-      this.dialogwarVisible=true;
-      this.warform=row;
+        this.warform=row;
+        this.wartitle="editWar"
+        this.dialogwarVisible=true;
     },
-    //删除医用人员信息
+    //删除战役动态信息
     delwarActive(id){
       this.$confirm('此操作将永久删除该信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -243,9 +274,9 @@ export default {
     },
     //查看内容
     showBattle(row){
-
-
-
+        // console.log(row);
+        this.dialogWarVisible=true
+        this.warform.content=row.content;
     },
     handleCurrentChange(val){
       this.current=val;
@@ -262,9 +293,9 @@ export default {
   width: 50%;
   margin-right: 10px;
 }
-.el-textarea{
-  height: 100px;
-
+.contentp{
+    padding-right: 20px;
+    font-size:16px ;
 }
 .textarea_input{
   height: 100%;
