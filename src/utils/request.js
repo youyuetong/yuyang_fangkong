@@ -49,6 +49,14 @@ export const battleadd=(data)=>post({url:'/battle/add',data});
 export const battleupdate=(data)=>post({url:'/battle/update',data})
 //战役动态删除
 export const battledel=(data)=>get('/battle/delete',data)
+// 抗疫先锋分页
+export const guardpage=(data)=>get('/vanguard/page',data);
+//抗疫先锋添加
+export const guardadd=(data)=>post({url:'/vanguard/add',data});
+//抗疫先锋编辑
+export const guardupdate=(data)=>post({url:'/vanguard/update',data})
+//抗疫先锋删除
+export const guarddel=(data)=>get('/vanguard/delete',data)
 //避谣专题表格查询
 export const refutepage=(data)=>get('/refute-rumor/page',data)
 //避谣专题添加按钮
@@ -57,6 +65,16 @@ export const refuteadd=(data)=>post({url:'/refute-rumor/add',data})
 export const refuteupdate=(data)=>post({url:'/refute-rumor/update',data})
 //避谣专题删除按钮
 export const refutedel=(data)=>get('/refute-rumor/delete',data)
+//公告分页查询
+export const noticepage=(data)=>get('/notice/page',data)
+//添加公告
+export const noticeadd=(data)=>post({url:'/notice/add',data})
+//更新公告
+export const noticeupdate=(data)=>post({url:'/notice/update',data})
+//删除公告
+export const noticedel=(data)=>get('/notice/delete',data)
+
+
 
 
 

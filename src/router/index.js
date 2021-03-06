@@ -11,7 +11,7 @@ import BattleMsg from "@/views/business/BattleMsg";
 import RefuteMsg from "@/views/business/RefuteMsg";
 import Antipioneer from "@/views/business/Antipioneer";
 import RoleMsg from '@/views/system/RoleMsg'
-import MenuMsg from '@/views/system/MenuMsg'
+import Vaccine from '@/views/system/Vaccine'
 import ConformMsg from '@/views/system/ConformMsg'
 Vue.use(VueRouter)
 
@@ -68,7 +68,7 @@ const routes = [
       },
       {
         path: '/roleMsg',
-        name: '角色管理',
+        name: '记录表',
         component: RoleMsg,
       },
       {
@@ -77,9 +77,9 @@ const routes = [
         component: ConformMsg,
       },
       {
-        path: '/menuMsg',
-        name: '菜单管理',
-        component: MenuMsg,
+        path: '/vaccine',
+        name: '疫苗预约',
+        component: Vaccine,
       }
     ]
   },

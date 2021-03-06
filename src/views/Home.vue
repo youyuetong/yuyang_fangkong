@@ -48,10 +48,10 @@
             </el-submenu>
 
             <el-submenu index="4">
-              <template slot="title"><i class="el-icon-setting"></i>系统管理</template>
-              <el-menu-item index="/menuMsg">菜单管理</el-menu-item>
-              <el-menu-item index="/roleMsg">角色管理</el-menu-item>
+              <template slot="title"><i class="el-icon-setting"></i>接种管理</template>
               <el-menu-item index="/conformMsg">公告管理</el-menu-item>
+              <el-menu-item index="/vaccine">疫苗预约</el-menu-item>
+              <el-menu-item index="/roleMsg">记录表</el-menu-item>
             </el-submenu>
 
           </el-menu>
